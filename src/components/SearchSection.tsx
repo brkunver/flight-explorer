@@ -6,17 +6,42 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import useFlightStore from "../store"
+import type { Flights } from "../store"
+import fetchFlights from "@/lib/fetchFlights"
 
 function SearchSection() {
   const [depDate, setDepDate] = useState<Date>()
   const [arvDate, setArvDate] = useState<Date>()
 
-  const flights = useFlightStore((state) => state.flights)
+  const API = "/api/flights.json"
+
   const setFlights = useFlightStore((state) => state.setFlights)
+  const setError = useFlightStore((state) => state.setError)
+  const setLoading = useFlightStore((state) => state.setLoading)
+
+  async function handleSearch() {
+    console.log("HandleSearch çalıştı")
+    setLoading(true)
+    
+    try {
+      console.log("handlesearch şuan api'yı deniyor")
+      const fetchedFlights = await fetchFlights(API)
+      setError(false)
+      setLoading(false)
+      setFlights(fetchedFlights)
+      console.log(fetchedFlights)
+    } catch {
+      console.log("Search section handlesearch hata verdi")
+      setError(true)
+      setLoading(false)
+    }
+
+  
+  }
 
   return (
     <main className="lg:bg-white bg-slate-100 lg:w-fit flex flex-col rounded-md mx-auto h-full px-4 py-4 mt-10">
-      <div id="citySelection" className="flex flex-col lg:flex-row  gap-x-8">
+      <div id="citySelection" className="flex flex-col lg:flex-row gap-x-8">
         <div className="flex flex-col justify-center align-middle content-center text-center w-[280px]">
           <Label htmlFor="departureCity" className="my-4">
             Departure City
@@ -59,6 +84,11 @@ function SearchSection() {
             <Calendar mode="single" selected={arvDate} onSelect={setArvDate} initialFocus />
           </PopoverContent>
         </Popover>
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-x-8 mt-4 justify-around">
+        <p>One Way ?</p>
+        <button onClick={handleSearch}>Search</button>
       </div>
     </main>
   )
