@@ -7,10 +7,10 @@ import backgroundImage from "@/assets/bg-wide.png"
 import ResultSection from "@/components/ResultSection";
 ---
 
-<Layout title="Welcome">
+<Layout title="Explore the Sky">
 	<div class="relative min-h-fit flex flex-col ">
 		<Image src={backgroundImage} alt="Background image" class="hidden lg:block absolute top-0 left-0 w-full z-[-1]"/>
-		<h2 class="text-center font-bold text-3xl mt-8">Explore Your Flight</h2>
+		<h2 class="text-center font-bold text-3xl mt-8">Find Best Flight For You</h2>
 		<SearchSection client:load/>
 		<ResultSection client:load/>   
 	</div>

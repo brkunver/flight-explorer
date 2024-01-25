@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
@@ -7,36 +7,64 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 import useFlightStore from "../store"
 import fetchFlights from "@/lib/fetchFlights"
+import compareDates from "@/lib/compareDate"
 
 function SearchSection() {
   const [depDate, setDepDate] = useState<Date>()
   const [arvDate, setArvDate] = useState<Date>()
+
+  const [depCity, setDepCity] = useState("")
+  const [arvCity, setArvCity] = useState("")
 
   const API = "/api/flights.json"
 
   const setFlights = useFlightStore((state) => state.setFlights)
   const setError = useFlightStore((state) => state.setError)
   const setLoading = useFlightStore((state) => state.setLoading)
+  const setShowResults = useFlightStore((state) => state.setShowResults)
 
-  async function handleSearch() {
+  useEffect(() => {
+    async function handleSearch() {
+      setLoading(true)
+      try {
+        const fetchedFlights = await fetchFlights(API)
+        setError(false)
+        setLoading(false)
 
-    setLoading(true)
-    
-    try {
-      
-      const fetchedFlights = await fetchFlights(API)
-      setError(false)
-      setLoading(false)
-      setFlights(fetchedFlights)
-      console.log(fetchedFlights)
-    } catch {
-    
-      setError(true)
-      setLoading(false)
+        let filteredFlights = fetchedFlights.filter((item) => {
+          if (arvCity != "" && depCity != "") {
+            if (
+              item.arrivalCity.toLowerCase().includes(arvCity.toLowerCase()) &&
+              item.departureCity.toLowerCase().includes(depCity.toLowerCase())
+            ) {
+              return true
+            }
+          } else if (depCity == "") {
+            if (item.arrivalCity.toLowerCase().includes(arvCity.toLowerCase())) {
+              return true
+            }
+          } else if (arvCity == "") {
+            if (item.departureCity.toLowerCase().includes(depCity.toLowerCase())) {
+              return true
+            }
+          }
+          return false
+        })
+
+        setFlights(filteredFlights)
+      } catch {
+        setError(true)
+        setLoading(false)
+      }
     }
 
-  
-  }
+    if (depCity != "" || arvCity != "") {
+      setTimeout(handleSearch, 100)
+      setShowResults(true)
+    } else {
+      setShowResults(false)
+    }
+  }, [depCity, arvCity])
 
   return (
     <main className="lg:bg-white bg-slate-100 lg:w-fit flex flex-col rounded-md mx-auto h-full px-4 py-4 mt-10">
@@ -45,13 +73,29 @@ function SearchSection() {
           <Label htmlFor="departureCity" className="my-4">
             Departure City
           </Label>
-          <Input id="departureCity" name="departureCity" type="text" placeholder="London" />
+          <Input
+            id="departureCity"
+            name="departureCity"
+            type="text"
+            placeholder="London"
+            onChange={(e) => {
+              setDepCity(e.target.value)
+            }}
+          />
         </div>
         <div className="flex flex-col justify-center align-middle content-center text-center w-[280px]">
           <Label htmlFor="arrivalCity" className="my-4">
             Arrival City
           </Label>
-          <Input id="arrivalCity" name="arrivalCity" type="text" placeholder="New York" />
+          <Input
+            id="arrivalCity"
+            name="arrivalCity"
+            type="text"
+            placeholder="New York"
+            onChange={(e) => {
+              setArvCity(e.target.value)
+            }}
+          />
         </div>
       </div>
 
@@ -87,7 +131,6 @@ function SearchSection() {
 
       <div className="flex flex-col lg:flex-row gap-x-8 mt-4 justify-around">
         <p>One Way ?</p>
-        <button onClick={handleSearch}>Search</button>
       </div>
     </main>
   )

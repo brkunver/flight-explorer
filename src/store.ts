@@ -19,19 +19,23 @@ export type Flights = Flight[]
 type FlightStore = {
   isLoading: boolean
   isError: boolean
+  showResults: boolean
   flights: Flights
   setFlights: (filteredFlights: Flights) => void
   setLoading: (loadingInput: boolean) => void
   setError: (errorInput: boolean) => void
+  setShowResults: (input: boolean) => void
 }
 
 const useFlightStore = create<FlightStore>((set) => ({
   isLoading: false,
+  showResults: false,
   isError: false,
   flights: [],
   setFlights: (filteredFlights: Flights) => set(() => ({ flights: filteredFlights })),
   setLoading: (loadingInput) => set(() => ({ isLoading: loadingInput })),
   setError: (errorInput) => set(() => ({ isError: errorInput })),
+  setShowResults: (input) => set(() => ({ showResults: input })),
 }))
 
 export default useFlightStore
