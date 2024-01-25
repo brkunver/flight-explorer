@@ -1,10 +1,17 @@
 ---
 import "@/styles/globals.css"
 import Layout from "@/components/Layout.astro"
-import SearchSection from "@/components/SearchSection.astro"
+import SearchSection from "@/components/SearchSection.tsx"
+import { Image } from "astro:assets";
+import backgroundImage from "@/assets/bg-wide.png"
+import ResultSection from "@/components/ResultSection";
 ---
 
 <Layout title="Welcome">
-  <SearchSection />
-  <h1>Welcome Astro</h1>
+	<div class="relative min-h-fit flex flex-col ">
+		<Image src={backgroundImage} alt="Background image" class="hidden lg:block absolute top-0 left-0 w-full z-[-1]"/>
+		<h2 class="text-center font-bold text-3xl mt-8">Explore Your Flight</h2>
+		<SearchSection client:load/>
+		<ResultSection client:load/>   
+	</div>
 </Layout>
