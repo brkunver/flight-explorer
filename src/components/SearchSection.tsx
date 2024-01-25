@@ -6,7 +6,6 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import useFlightStore from "../store"
-import type { Flights } from "../store"
 import fetchFlights from "@/lib/fetchFlights"
 
 function SearchSection() {
@@ -20,18 +19,18 @@ function SearchSection() {
   const setLoading = useFlightStore((state) => state.setLoading)
 
   async function handleSearch() {
-    console.log("HandleSearch çalıştı")
+
     setLoading(true)
     
     try {
-      console.log("handlesearch şuan api'yı deniyor")
+      
       const fetchedFlights = await fetchFlights(API)
       setError(false)
       setLoading(false)
       setFlights(fetchedFlights)
       console.log(fetchedFlights)
     } catch {
-      console.log("Search section handlesearch hata verdi")
+    
       setError(true)
       setLoading(false)
     }
