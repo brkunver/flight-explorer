@@ -1,6 +1,7 @@
 import useFlightStore from "../store"
 import ResultCard from "./ui/ResultCard"
 import { useState } from "react"
+import { ArrowDown01, ArrowDown10 } from "lucide-react"
 
 export default function ResultSection() {
   const [sortTime, setSortTime] = useState(true)
@@ -51,7 +52,11 @@ export default function ResultSection() {
           <p className="lg:min-w-32">Departure City</p>
           <p className="lg:min-w-32">Arrival City</p>
           <button onClick={sortByDate} className="lg:min-w-32">
-            Departure Time
+            <div className="flex justify-center items-center">
+              <p>Departure City</p>
+
+              {sortTime ? <ArrowDown01 /> : <ArrowDown10 />}
+            </div>
           </button>
           <p className="lg:min-w-32">Return Time</p>
           <p className="lg:min-w-32">Trip Duration</p>
