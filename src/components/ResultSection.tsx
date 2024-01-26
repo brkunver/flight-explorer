@@ -1,4 +1,5 @@
 import useFlightStore from "../store"
+import ResultCard from "./ui/ResultCard"
 
 export default function ResultSection() {
   const flights = useFlightStore((state) => state.flights)
@@ -7,7 +8,7 @@ export default function ResultSection() {
   const isShowResults = useFlightStore((state) => state.showResults)
   function getResults() {
     if (!isShowResults) {
-      return ""
+      return "Start typing for flights,they will be listed her here "
     }
     if (isError) {
       return "error..."
@@ -16,23 +17,13 @@ export default function ResultSection() {
       return "loading..."
     } else {
       return flights.map((flight) => {
-        return (
-          <div key={flight.id}>
-            <p>
-              Departure City = {flight.departureCity} --- Arrival City = {flight.arrivalCity}
-            </p>
-            <br />
-            <p>
-              Dep Time = {flight.departureTime} --- Arrival Time = {flight.arrivalTime}
-            </p>
-          </div>
-        )
+        return <ResultCard singleFlight={flight}></ResultCard>
       })
     }
   }
 
   return (
-    <div className="mx-auto my-20 text-center flex flex-col">
+    <div className="mx-auto my-20 text-center flex flex-col lg:min-w-[1000px] lg:min-h-[300px]">
       <h2>Results</h2>
 
       {getResults()}
