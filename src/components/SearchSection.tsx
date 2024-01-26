@@ -32,23 +32,41 @@ function SearchSection() {
         setLoading(false)
 
         let filteredFlights = fetchedFlights.filter((item) => {
+          let depCityEquality = item.departureCity.toLowerCase().includes(depCity.toLowerCase())
+          let arvCityEquality = item.arrivalCity.toLowerCase().includes(arvCity.toLowerCase())
+          let depDateEquality = compareDates(depDate || new Date("1999"), new Date(item.departureTime))
+          let arvDateEquality = compareDates(arvDate || new Date("1999"), new Date(item.arrivalTime))
+
           if (arvCity != "" && depCity != "") {
-            if (
-              item.arrivalCity.toLowerCase().includes(arvCity.toLowerCase()) &&
-              item.departureCity.toLowerCase().includes(depCity.toLowerCase())
-            ) {
-              return true
+            if (depDate == undefined && arvDate == undefined) {
+              return arvCityEquality && depCityEquality
+            } else if (depDate == undefined) {
+              return arvCityEquality && depCityEquality && arvDateEquality
+            } else if (arvDate == undefined) {
+              return arvCityEquality && depCityEquality && depDateEquality
             }
+            return false
           } else if (depCity == "") {
-            if (item.arrivalCity.toLowerCase().includes(arvCity.toLowerCase())) {
-              return true
+            if (depDate == undefined && arvDate == undefined) {
+              return arvCityEquality
+            } else if (depDate == undefined) {
+              return arvCityEquality && arvDateEquality
+            } else if (arvDate == undefined) {
+              return arvCityEquality && depDateEquality
             }
+            return false
           } else if (arvCity == "") {
-            if (item.departureCity.toLowerCase().includes(depCity.toLowerCase())) {
-              return true
+            if (depDate == undefined && arvDate == undefined) {
+              return depCityEquality
+            } else if (depDate == undefined) {
+              return depCityEquality && arvDateEquality
+            } else if (arvDate == undefined) {
+              return depCityEquality && depDateEquality
             }
+            return false
+          } else {
+            return false
           }
-          return false
         })
 
         setFlights(filteredFlights)
@@ -64,6 +82,9 @@ function SearchSection() {
     } else {
       setShowResults(false)
     }
+
+    console.log("Dep City = ", depCity, "Arv City = ", arvCity)
+    console.log("Dep Date = ", depDate, "Arv Date = ", arvDate)
   }, [depCity, arvCity])
 
   return (

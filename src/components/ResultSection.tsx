@@ -21,6 +21,10 @@ export default function ResultSection() {
             <p>
               Departure City = {flight.departureCity} --- Arrival City = {flight.arrivalCity}
             </p>
+            <br />
+            <p>
+              Dep Time = {flight.departureTime} --- Arrival Time = {flight.arrivalTime}
+            </p>
           </div>
         )
       })
@@ -28,7 +32,7 @@ export default function ResultSection() {
   }
 
   return (
-    <div className="mx-auto text-center flex flex-col">
+    <div className="mx-auto my-20 text-center flex flex-col">
       <h2>Results</h2>
 
       {getResults()}
