@@ -12,10 +12,12 @@ import compareDates from "@/lib/compareDate"
 
 function SearchSection() {
   const [depDate, setDepDate] = useState<Date>()
-  const [arvDate, setArvDate] = useState<Date>()
+  const [retDepDate, setretDepDate] = useState<Date>()
 
   const [depCity, setDepCity] = useState("")
   const [arvCity, setArvCity] = useState("")
+
+  const [isOneWay, setIsOneWay] = useState<any>(false)
 
   const API = "/api/flights.json"
 
@@ -36,32 +38,33 @@ function SearchSection() {
           let depCityEquality = item.departureCity.toLowerCase().includes(depCity.toLowerCase())
           let arvCityEquality = item.arrivalCity.toLowerCase().includes(arvCity.toLowerCase())
           let depDateEquality = compareDates(depDate || new Date("1999"), new Date(item.departureTime))
-          let arvDateEquality = compareDates(arvDate || new Date("1999"), new Date(item.arrivalTime))
+          let retDepDateEquality = compareDates(retDepDate || new Date("1999"), new Date(item.returnDepartureTime))
+          let oneWayEquality = item.isRoundTrip && isOneWay
 
           if (arvCity != "" && depCity != "") {
-            if (depDate == undefined && arvDate == undefined) {
+            if (depDate == undefined && retDepDate == undefined) {
               return arvCityEquality && depCityEquality
             } else if (depDate == undefined) {
-              return arvCityEquality && depCityEquality && arvDateEquality
-            } else if (arvDate == undefined) {
+              return arvCityEquality && depCityEquality && retDepDateEquality
+            } else if (retDepDate == undefined) {
               return arvCityEquality && depCityEquality && depDateEquality
             }
             return false
           } else if (depCity == "") {
-            if (depDate == undefined && arvDate == undefined) {
+            if (depDate == undefined && retDepDate == undefined) {
               return arvCityEquality
             } else if (depDate == undefined) {
-              return arvCityEquality && arvDateEquality
-            } else if (arvDate == undefined) {
+              return arvCityEquality && retDepDateEquality
+            } else if (retDepDate == undefined) {
               return arvCityEquality && depDateEquality
             }
             return false
           } else if (arvCity == "") {
-            if (depDate == undefined && arvDate == undefined) {
+            if (depDate == undefined && retDepDate == undefined) {
               return depCityEquality
             } else if (depDate == undefined) {
-              return depCityEquality && arvDateEquality
-            } else if (arvDate == undefined) {
+              return depCityEquality && retDepDateEquality
+            } else if (retDepDate == undefined) {
               return depCityEquality && depDateEquality
             }
             return false
@@ -85,7 +88,7 @@ function SearchSection() {
     }
 
     console.log("Dep City = ", depCity, "Arv City = ", arvCity)
-    console.log("Dep Date = ", depDate, "Arv Date = ", arvDate)
+    console.log("Dep Date = ", depDate, "Arv Date = ", retDepDate)
   }, [depCity, arvCity])
 
   return (
@@ -140,20 +143,23 @@ function SearchSection() {
           <PopoverTrigger className="mt-4" asChild>
             <Button
               variant={"outline"}
-              className={cn("w-[280px] justify-start text-left font-normal", !arvDate && "text-gray-700")}
+              className={cn("w-[280px] justify-start text-left font-normal", !retDepDate && "text-gray-700")}
+              disabled={isOneWay}
             >
-              {arvDate ? arvDate.toDateString() : <span>Pick arrival date</span>}
+              {retDepDate ? retDepDate.toDateString() : <span>Pick return date</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={arvDate} onSelect={setArvDate} initialFocus />
+            <Calendar mode="single" selected={retDepDate} onSelect={setretDepDate} initialFocus />
           </PopoverContent>
         </Popover>
       </div>
 
       <div className="flex flex-col lg:flex-row mt-4 gap-x-2 justify-center align-middle">
-        <Checkbox id="one-way" className={cn("my-auto")} />
-        <label htmlFor="one-way" className="my-auto">One Way Trip ?</label>
+        <Checkbox id="one-way" className={cn("my-auto")} onCheckedChange={(e) => setIsOneWay(e)} />
+        <label htmlFor="one-way" className="my-auto">
+          One Way Trip ?
+        </label>
       </div>
     </main>
   )

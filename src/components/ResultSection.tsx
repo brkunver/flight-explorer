@@ -17,7 +17,7 @@ export default function ResultSection() {
       return <p>Loading...</p>
     } else {
       return flights.map((flight) => {
-        return <ResultCard singleFlight={flight}></ResultCard>
+        return <ResultCard key={flight.id} singleFlight={flight}></ResultCard>
       })
     }
   }
@@ -29,7 +29,7 @@ export default function ResultSection() {
           <p className="lg:min-w-32">Departure City</p>
           <p className="lg:min-w-32">Arrival City</p>
           <p className="lg:min-w-32">Departure Time</p>
-          <p className="lg:min-w-32">Arrival Time</p>
+          <p className="lg:min-w-32">Return Time</p>
           <p className="lg:min-w-32">Trip Duration</p>
           <p className="lg:min-w-32">Price</p>
         </div>
