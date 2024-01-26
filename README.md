@@ -5,7 +5,7 @@ Demo Link | Cloudflare Pages : https://flight-explorer.pages.dev
 ### Used Technologies
 
 - Typescript
-- Astro : For static web app creating and routing
-- React : For dynamic areas
+- Astro : For static web app creation and routing
+- React : For dynamic components
 - Tailwindcss : For styling
-- Zustand : for global state management
+- Zustand : For global state management

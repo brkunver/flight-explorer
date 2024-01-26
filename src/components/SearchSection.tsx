@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
 import { Calendar } from "@/components/ui/calendar"
+import { Checkbox } from "./ui/checkbox"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import useFlightStore from "../store"
@@ -150,8 +151,9 @@ function SearchSection() {
         </Popover>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-x-8 mt-4 justify-around">
-        <p>One Way ?</p>
+      <div className="flex flex-col lg:flex-row mt-4 gap-x-2 justify-center align-middle">
+        <Checkbox id="one-way" className={cn("my-auto")} />
+        <label htmlFor="one-way" className="my-auto">One Way Trip ?</label>
       </div>
     </main>
   )

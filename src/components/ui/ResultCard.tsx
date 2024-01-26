@@ -5,14 +5,21 @@ type Props = {
 }
 
 function ResultCard({ singleFlight }: Props) {
+  const depDate = new Date(singleFlight.departureTime)
+  const arvDate = new Date(singleFlight.arrivalTime)
+
   return (
-    <div className="flex gap-x-2">
-      <p>{singleFlight.departureCity}</p>
-      <p>{singleFlight.arrivalCity}</p>
-      <p>{singleFlight.departureTime}</p>
-      <p>{singleFlight.arrivalTime}</p>
-      <p>{singleFlight.duration}</p>
-      <p>{singleFlight.price}</p>
+    <div className="flex gap-x-2 justify-evenly bg-white rounded-sm border-t-[0.2px] px-4 py-2 ">
+      <p className="lg:min-w-32">{singleFlight.departureCity}</p>
+      <p className="lg:min-w-32">{singleFlight.arrivalCity}</p>
+      <p className="lg:min-w-32">
+        {depDate.toLocaleDateString()} : {depDate.toLocaleTimeString()}
+      </p>
+      <p className="lg:min-w-32">
+        {arvDate.toLocaleDateString()} : {arvDate.toLocaleTimeString()}
+      </p>
+      <p className="lg:min-w-32">{singleFlight.duration}</p>
+      <p className="lg:min-w-32">{singleFlight.price}</p>
     </div>
   )
 }
