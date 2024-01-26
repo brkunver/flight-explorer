@@ -88,8 +88,8 @@ function SearchSection() {
     }
 
     console.log("Dep City = ", depCity, "Arv City = ", arvCity)
-    console.log("Dep Date = ", depDate, "Arv Date = ", retDepDate)
-  }, [depCity, arvCity])
+    console.log("Dep Date = ", depDate, "ret Date = ", retDepDate)
+  }, [depCity, arvCity,depDate,retDepDate])
 
   return (
     <main className="lg:bg-white bg-slate-100 lg:w-fit flex flex-col rounded-md mx-auto h-full px-4 py-4 mt-10">

@@ -23,7 +23,7 @@ export default function ResultSection() {
   }
 
   function getTopBar() {
-    if (isShowResults) {
+    if (isShowResults && !isError) {
       return (
         <div className="flex gap-x-2 justify-evenly bg-white rounded-sm border-t-[0.2px] px-4 py-2 font-semibold text-lg">
           <p className="lg:min-w-32">Departure City</p>
