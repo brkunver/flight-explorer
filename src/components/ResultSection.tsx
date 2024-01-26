@@ -23,7 +23,7 @@ export default function ResultSection() {
   }
 
   return (
-    <div className="mx-auto my-20 text-center flex flex-col lg:min-w-[1000px] lg:min-h-[300px]">
+    <div className="mx-auto my-20 text-center flex flex-col lg:min-w-[1000px] lg:min-h-[300px] border-[0.5px] shadow-sm">
       <h2>Results</h2>
 
       {getResults()}
