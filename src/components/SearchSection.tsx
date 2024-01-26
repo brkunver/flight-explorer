@@ -41,6 +41,10 @@ function SearchSection() {
           let retDepDateEquality = compareDates(retDepDate || new Date("1999"), new Date(item.returnDepartureTime))
           let oneWayEquality = item.isRoundTrip && isOneWay
 
+          if (oneWayEquality) {
+            return false
+          }
+
           if (arvCity != "" && depCity != "") {
             if (depDate == undefined && retDepDate == undefined) {
               return arvCityEquality && depCityEquality
@@ -89,7 +93,7 @@ function SearchSection() {
 
     console.log("Dep City = ", depCity, "Arv City = ", arvCity)
     console.log("Dep Date = ", depDate, "ret Date = ", retDepDate)
-  }, [depCity, arvCity,depDate,retDepDate])
+  }, [depCity, arvCity, depDate, retDepDate, isOneWay])
 
   return (
     <main className="lg:bg-white bg-slate-100 lg:w-fit flex flex-col rounded-md mx-auto h-full px-4 py-4 mt-10">
