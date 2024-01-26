@@ -96,7 +96,7 @@ function SearchSection() {
   }, [depCity, arvCity, depDate, retDepDate, isOneWay])
 
   return (
-    <main className="lg:bg-white bg-slate-100 lg:w-fit flex flex-col rounded-md mx-auto h-full px-4 py-4 mt-10">
+    <main className="lg:bg-gray-50 shadow-sm bg-slate-100 lg:w-fit flex flex-col rounded-md mx-auto h-full px-4 py-4 mt-10">
       <div id="citySelection" className="flex flex-col lg:flex-row gap-x-8">
         <div className="flex flex-col justify-center align-middle content-center text-center w-[280px]">
           <Label htmlFor="departureCity" className="my-4">
