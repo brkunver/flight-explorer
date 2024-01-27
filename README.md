@@ -11,3 +11,4 @@ Start typing cities for search results. You can also select dates and sort resul
 - React : For dynamic components
 - Tailwindcss : For styling
 - Zustand : For global state management
+- Chatgpt : For creation of data and mock api
