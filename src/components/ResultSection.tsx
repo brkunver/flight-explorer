@@ -9,8 +9,7 @@ export default function ResultSection() {
   const [sortDepCity, setSortDepCity] = useState(true)
   const [sortArvCity, setSortArvCity] = useState(true)
   const [sortDuration, setSortDuration] = useState(true)
-
-  console.log("Result Section Rendered")
+  const [sortPrice, setSortPrice] = useState(true)
 
   const flights = useFlightStore((state) => state.flights)
   const setFlights = useFlightStore((state) => state.setFlights)
@@ -79,6 +78,21 @@ export default function ResultSection() {
     setSortArvCity((state) => !state)
   }
 
+  function sortByPrice() {
+    let newFlights: Flights
+    if (sortPrice) {
+      newFlights = flights.toSorted((flight1, flight2) => {
+        return flight1.price - flight2.price
+      })
+    } else {
+      newFlights = flights.toSorted((flight1, flight2) => {
+        return flight2.price - flight1.price
+      })
+    }
+    setFlights(newFlights)
+    setSortPrice((state) => !state)
+  }
+
   function getResults() {
     if (!isShowResults) {
       return <p>Start typing for flights,they will be listed her here</p>
@@ -130,7 +144,13 @@ export default function ResultSection() {
             </div>
           </button>
 
-          <p className="lg:min-w-32">Price</p>
+          <button onClick={sortByPrice} className="lg:min-w-32">
+            <div className="flex justify-center items-center">
+              <p>Price</p>
+
+              {sortPrice ? <ArrowDown01 /> : <ArrowDown10 />}
+            </div>
+          </button>
         </div>
       )
     }
