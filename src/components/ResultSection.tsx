@@ -1,12 +1,14 @@
 import useFlightStore, { type Flights } from "../store"
 import ResultCard from "./ui/ResultCard"
 import { useState } from "react"
+import parseDuration from "@/lib/parseDuration"
 import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA } from "lucide-react"
 
 export default function ResultSection() {
   const [sortTime, setSortTime] = useState(true)
   const [sortDepCity, setSortDepCity] = useState(true)
   const [sortArvCity, setSortArvCity] = useState(true)
+  const [sortDuration, setSortDuration] = useState(true)
 
   console.log("Result Section Rendered")
 
@@ -30,6 +32,21 @@ export default function ResultSection() {
 
     setFlights(newFlights)
     setSortTime((state) => !state)
+  }
+
+  function sortByDuration() {
+    let newFlights: Flights
+    if (sortDuration) {
+      newFlights = flights.toSorted((flight1, flight2) => {
+        return parseDuration(flight1.duration) - parseDuration(flight2.duration)
+      })
+    } else {
+      newFlights = flights.toSorted((flight1, flight2) => {
+        return parseDuration(flight2.duration) - parseDuration(flight1.duration)
+      })
+    }
+    setFlights(newFlights)
+    setSortDuration((state) => !state)
   }
 
   function sortByDepartureCity() {
@@ -98,13 +115,21 @@ export default function ResultSection() {
           </button>
           <button onClick={sortByDate} className="lg:min-w-32">
             <div className="flex justify-center items-center">
-              <p>Departure City</p>
+              <p>Departure Time</p>
 
               {sortTime ? <ArrowDown01 /> : <ArrowDown10 />}
             </div>
           </button>
           <p className="lg:min-w-32">Return Time</p>
-          <p className="lg:min-w-32">Trip Duration</p>
+
+          <button onClick={sortByDuration} className="lg:min-w-32">
+            <div className="flex justify-center items-center">
+              <p>Trip Duration</p>
+
+              {sortDuration ? <ArrowDown01 /> : <ArrowDown10 />}
+            </div>
+          </button>
+
           <p className="lg:min-w-32">Price</p>
         </div>
       )
