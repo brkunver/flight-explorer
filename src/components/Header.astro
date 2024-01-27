@@ -3,15 +3,17 @@
 ---
 
 <header
-  class="bg-sky-900 shadow-2xl flex h-12 w-screen px-2 lg:h-10 justify-between lg:justify-center content-center text-center text-gray-200 gap-x-12"
+  class="bg-sky-900 shadow-2xl flex h-14 w-screen px-2 lg:h-10 justify-center content-center text-center text-gray-200 gap-x-12"
 >
   <a href="/" class="my-auto">Flight Explorer</a>
-  <a href="/" class="my-auto hidden lg:block">About</a>
-  <a href="/" class="my-auto hidden lg:block">Home Page</a>
-  <a href="/" class="my-auto hidden lg:block">Home Page</a>
-  <button class="lg:hidden" >Menu</button>
+  <a href="/about" class="my-auto">About</a>
+  <a href="https://github.com/brkunver/flight-explorer" target="_blank" class="my-auto hidden lg:block">Our Corporation</a>
 
-  <div class="hidden lg:hidden min-h-screen min-w-full bg-white absolute top-0 left-0 z-10 flex-col">
-    <h2>Mobile menu</h2>
-  </div>
 </header>
+
+
+<style>
+  a {
+    @apply font-bold text-lg;
+  }
+</style>

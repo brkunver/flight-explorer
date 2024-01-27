@@ -1,27 +1,26 @@
 import { create } from "zustand"
 
 export type Flight = {
-  id?: number;
-  airline?: string;
-  departureAirport?: string;
-  arrivalAirport?: string;
-  departureCity?: string;
-  arrivalCity?: string;
-  departureTime?: string | null;
-  arrivalTime?: string | null;
-  duration?: string | null;
-  price?: number | null;
-  isRoundTrip?: boolean | null;
-  returnDepartureAirport?: string | null;
-  returnArrivalAirport?: string | null;
-  returnDepartureCity?: string | null;
-  returnArrivalCity?: string | null;
-  returnDepartureTime?: string | null;
-  returnArrivalTime?: string | null;
-  returnDuration?: string | null;
-  returnPrice?: number | null;
+  id?: number
+  airline?: string
+  departureAirport?: string
+  arrivalAirport?: string
+  departureCity?: string
+  arrivalCity?: string
+  departureTime?: string | null
+  arrivalTime?: string | null
+  duration?: string | null
+  price?: number | null
+  isRoundTrip?: boolean | null
+  returnDepartureAirport?: string | null
+  returnArrivalAirport?: string | null
+  returnDepartureCity?: string | null
+  returnArrivalCity?: string | null
+  returnDepartureTime?: string | null
+  returnArrivalTime?: string | null
+  returnDuration?: string | null
+  returnPrice?: number | null
 }
-
 
 export type Flights = Flight[]
 
